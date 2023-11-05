@@ -2,7 +2,7 @@ from flask import Flask
 from flask import render_template,url_for,request,redirect
 from flask_sqlalchemy import SQLAlchemy 
 from flask_login import LoginManager,UserMixin,login_user, logout_user,login_required,current_user
-from book import *
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.sqlite"
@@ -26,7 +26,8 @@ class ClassroomBookings(db.Model):
     id = db.Column(db.Integer,unique = True, primary_key = True)
     classroom = db.Column(db.String(10),nullable = False)
     consumer = db.Column(db.String(250),nullable = False)
-    timeslot = db.Column(db.Integer,nullable = False)
+    time_start = db.Column(db.String(250),nullable = False)
+    time_end = db.Column(db.String(250),nullable = False)
     date = db.Column(db.Date, nullable= False)
     status = db.Column(db.Integer, nullable = True)
 
@@ -92,21 +93,28 @@ classes = ['UG1','UG2','UG3','UG4']
 @app.route('/classroom')
 @login_required
 def classroom():
+    print(ClassroomBookings.query.get(1).classroom)
     #create a json data to send to the frontend to display the available timeslots and classrooms
-    for i in classes:
-        print(ClassroomBookings.query.filter_by(classroom = i).all())
-    b = Users.query.all()
-    c = []
-    for i in b:
-        c.append(i.mapping)
-    print(c)
+    
     return render_template('classroomcalendar.html')
 
-@app.route('/classroomBook',methods = ['POST'])
+@app.route('/classroom/book',methods = ['POST','GET'])
 @login_required
 def book_classroom():
+
     if request.method == "POST":
-        createBooking(db,request.form.get('classroomName'),current_user.username, request.form.get('timeslot'),request.form.get('date'),0)
+        #check availability
+        print()
+        booking = ClassroomBookings(classroom = request.form.get('classroomName'),
+                          consumer = current_user.username, 
+                          time_start = request.form.get('time_start') ,#datetime.strptime(request.form.get('time_start'),'%H:%M').time(),
+                          time_end = request.form.get('time_end'),#datetime.strptime(request.form.get('time_end'),'%H:%M').time(),
+                          date = datetime.strptime(request.form.get('date'),'%Y-%M-%S').date(),
+                          status = 0)
+        db.session.add(booking)
+        db.session.commit()
+        return redirect('/dashboard')
+    return redirect('/classroom')
 
 @app.route('/labs')
 @login_required

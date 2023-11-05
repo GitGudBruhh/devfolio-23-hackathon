@@ -102,6 +102,23 @@ header1 {
     background: #ddd;
 }
 
+.navbar .logout-btn {
+    border: none;
+    outline: none;
+    background: #fff;
+    color: #275360;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.navbar .logout-btn:hover {
+    background: #ddd;
+}
+
 .form-popup {
     position: fixed;
     top: 50%;
@@ -267,6 +284,21 @@ form button:hover {
 
 .form-content .bottom-link {
     text-align: center;
+}.navbar .login-btn {
+    border: none;
+    outline: none;
+    background: #fff;
+    color: #275360;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.navbar .login-btn:hover {
+    background: #ddd;
 }
 
 .form-popup .signup,
@@ -330,7 +362,22 @@ form button:hover {
         margin: 20px 0;
         font-size: 1.2rem;
         color: #000;
-    }
+    }.navbar .login-btn {
+    border: none;
+    outline: none;
+    background: #fff;
+    color: #275360;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 10px 18px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.navbar .login-btn:hover {
+    background: #ddd;
+}
 
     .navbar .links a:hover {
         color: #00BCD4;
@@ -354,4 +401,12 @@ form button:hover {
     .form-box .form-content {
         padding: 30px 20px;
     }
+}
+
+.sem-container {
+    padding: 7%;
+}
+
+.dashboard-items {
+    padding: 3%;
 }
