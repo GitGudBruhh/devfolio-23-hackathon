@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <!-- Google Fonts Link For Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'style.css')}}">
+    <script src="{{url_for('static', filename='script.js')}}" defer></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <span class="hamburger-btn material-symbols-rounded">menu</span>
+            <a href="{{url_for('home')}}" class="logo">
+                <img src="{{url_for('static', filename = 'images/logo2.jpg')}}" alt="logo">
+                <h2>IITDh Resource Manager</h2>
+            </a>
+            <ul class="links">
+                <span class="close-btn material-symbols-rounded">close</span>
+                <li><a href="{{url_for('classroom')}}">Classrooms</a></li>
+                <li><a href="{{url_for('labs')}}">Labs</a></li>
+                <li><a href="{{url_for('transport')}}">Transportation</a></li>
+            </ul>
+            <form action = "{{url_for('logout')}}">
+            <button type ="submit" class="login-btn">Logout</button>
+        </form>
+        </nav>
+    </header>   
+
+</body>
+</html>

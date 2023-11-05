@@ -29,8 +29,3 @@ signupLoginLink.forEach(link => {
         formPopup.classList[link.id === 'signup-link' ? 'add' : 'remove']("show-signup");
     });
 });
-
-function validateEmail(email) {
-    const res = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    return res.test(String(email).toLowerCase());
-}
