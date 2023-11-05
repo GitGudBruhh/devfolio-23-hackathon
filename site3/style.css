@@ -404,5 +404,9 @@ form button:hover {
 }
 
 .sem-container {
+    padding: 7%;
+}
+
+.dashboard-items {
     padding: 3%;
 }
