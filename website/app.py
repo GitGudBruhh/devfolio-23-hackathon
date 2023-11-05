@@ -120,7 +120,6 @@ def book_classroom():
         #check availability
         print()
         avai = ClassroomBookings.query.filter_by(date = datetime.strptime(request.form.get('date'),'%Y-%M-%S').date()).all()
-        print(avai[0].classroom)
         li = []
         msg = ""
         for i in avai:
@@ -155,7 +154,7 @@ def book_lab():
         #check availability
         print()
         avai = LabBookings.query.filter_by(date = datetime.strptime(request.form.get('date'),'%Y-%M-%S').date()).all()
-        print(avai[0].classroom)
+        
         li = []
         msg = ""
         for i in avai:
@@ -190,7 +189,7 @@ def book_event():
         #check availability
         print()
         avai = ClassroomBookings.query.filter_by(date = datetime.strptime(request.form.get('date'),'%Y-%M-%S').date()).all()
-        print(avai[0].classroom)
+
         li = []
         msg = ""
         for i in avai:
