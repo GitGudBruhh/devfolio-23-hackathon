@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='style1.css')}}">
-    <script src="{{url_for('static', filename='script.js')}}" defer></script>
+    <!--<script src="{{url_for('static', filename='script.js')}}" defer></script> -->
     <script src="{{url_for('static', filename='script1.js')}}" defer></script>
 </head>
 <body>
@@ -22,10 +22,11 @@
            
                 <ul class="links">
                   <span class="close-btn material-symbols-rounded">close</span>
+                  <li><a href="/dashboard">Home</a></li>
                   <li><a href="{{url_for('classroom')}}"  style="color:cadetblue">Classrooms</a></li>
                   <li><a href="{{url_for('labs')}}">Labs</a></li>
-                  <li><a href="{{url_for('transport')}}">Transportation</a></li>
-                <li><a href="#">Contact us</a></li>
+                  <li><a href="/events">Events</a></li>
+                  <li><a href="#">Contact us</a></li>
             </ul>
             <form action = "{{url_for('logout')}}">
               <button type ="submit" class="login-btn">Logout</button>
@@ -34,14 +35,14 @@
     </header1>
 
     <div class="wrapper">
-      <header>
+      <header style="border-width: 5px; border-style: solid; border-radius: 10px 10px 0px 0px">
         <p class="current-date"></p>
         <div class="icons">
           <span id="prev" class="material-symbols-rounded">chevron_left</span>
           <span id="next" class="material-symbols-rounded">chevron_right</span>
         </div>
       </header>
-      <div class="calendar">
+      <div class="calendar" style="border-style: solid; border-radius: 0px 0px 10px 10px; border-width: 0px 5px 5px 5px;">
         <ul class="weeks">
           <li>Sun</li>
           <li>Mon</li>

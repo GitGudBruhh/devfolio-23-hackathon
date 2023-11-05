@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendar - Transportation</title>
+    <title>Calendar - Events</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='style1.css')}}">
-    <script src="{{url_for('static', filename='script.js')}}" defer></script>
+    
     <script src="{{url_for('static', filename='script1.js')}}" defer></script>
 </head>
 <body>
@@ -20,9 +22,11 @@
             </a>
             <ul class="links">
                 <span class="close-btn material-symbols-rounded">close</span>
+                <li><a href="/dashboard">Home</a></li>
                 <li><a href="{{url_for('classroom')}}">Classrooms</a></li>
                 <li><a href="{{url_for('labs')}}">Labs</a></li>
-                <li><a href="{{url_for('transport')}}" style="color:cadetblue">Transportation</a></li>
+                <li><a href="/events" style="color:cadetblue">Events</a></li>
+                <li><a href="/contactus">Contact us</a></li>
             </ul>
             <form action = "{{url_for('logout')}}">
               <button type ="submit" class="login-btn">Logout</button>
@@ -31,14 +35,14 @@
     </header1>
 
     <div class="wrapper">
-      <header>
+      <header style="border-width: 5px; border-style: solid; border-radius: 10px 10px 0px 0px">
         <p class="current-date"></p>
         <div class="icons">
           <span id="prev" class="material-symbols-rounded">chevron_left</span>
           <span id="next" class="material-symbols-rounded">chevron_right</span>
         </div>
       </header>
-      <div class="calendar">
+      <div class="calendar" style="border-style: solid; border-radius: 0px 0px 10px 10px; border-width: 0px 5px 5px 5px;">
         <ul class="weeks">
           <li>Sun</li>
           <li>Mon</li>
@@ -52,4 +56,42 @@
       </div>
     </div>
 
+    <form class="booking-form" action = "/event/book" method = "post">
+
+      <div class="booking-form-container">
+
+      <h1 style="padding-bottom: 5%; margin-left:7%; "> <u> Request for an event: </u> </h1>
+      <hr style="width: 100%; border-color: #191b1e;">
+      <div class="booking-fields">
+        <div><label for="book-classroom-no"> <b> Lab number: </b> <label></div>
+        <select name = "classroomName" id="book-classroom-no" style="width: 100%; height: 35px; background-color: white; border-style: solid; border-color: black; border-radius:10px; padding-left: 2%;" required>
+          <option value="" disabled selected hidden>Select a room</option>
+          <option> Room 1 </option>
+          <option > Room 2 </option>
+          <option > Room 3 </option>
+        </select>
+      </div>
+
+      <div class="booking-fields">
+        <div><label for="book-date"> <b> Date: </b> <label></div>
+        <input id="book-date" type="date" name = "date" required>
+      </div>
+
+      <div class="booking-fields">
+        <div><label for="book-time-start"> <b> Start Time: </b> <label></div>
+        <input id="book-time-start" type="time" name = "time_start" placeholder="E.g. 1" required>
+      </div>
+
+      <div class="booking-fields">
+        <div><label for="book-time-end"> <b> End Time: </b> <label></div>
+        <input id="book-time-end" type="time" name = time_end placeholder="E.g. 1" required>
+      </div>
+
+      <ul class="days"></ul>
+    </div>
+
+    <div style="width: 90%; margin-left: 5%; margin-right: 5%;">
+      <button type="submit" style="border-style:solid; border-color: black; border-radius:20px; border-width: 3px;">Request for Approval</button>
+    </div>
+  </form>
 </body>

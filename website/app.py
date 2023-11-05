@@ -3,6 +3,7 @@ from flask import render_template,url_for,request,redirect
 from flask_sqlalchemy import SQLAlchemy 
 from flask_login import LoginManager,UserMixin,login_user, logout_user,login_required,current_user
 from datetime import datetime
+import pandas as pd
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.sqlite"
@@ -23,6 +24,16 @@ class Users(UserMixin,db.Model):
 #class for class booking
 
 class ClassroomBookings(db.Model):
+    id = db.Column(db.Integer,unique = True, primary_key = True)
+    classroom = db.Column(db.String(10),nullable = False)
+    consumer = db.Column(db.String(250),nullable = False)
+    time_start = db.Column(db.String(250),nullable = False)
+    time_end = db.Column(db.String(250),nullable = False)
+    date = db.Column(db.Date, nullable= False)
+    status = db.Column(db.Integer, nullable = True)
+
+
+class LabBookings(db.Model):
     id = db.Column(db.Integer,unique = True, primary_key = True)
     classroom = db.Column(db.String(10),nullable = False)
     consumer = db.Column(db.String(250),nullable = False)
@@ -84,8 +95,10 @@ def logout():
 
 @app.route('/dashboard')
 @login_required
-def dashboard():    
-    return render_template("home.html")
+def dashboard(): 
+
+    options = []
+    return render_template("home.html", option = options)
 
 
 classes = ['UG1','UG2','UG3','UG4']
@@ -121,13 +134,49 @@ def book_classroom():
 def labs():
     return render_template('labcalendar.html')
 
-@app.route('/transport')
+@app.route('/labs/book')
+@login_required
+def book_lab():
+    if request.method == "POST":
+        #check availability
+        print()
+        booking = LabBookings(classroom = request.form.get('classroomName'),
+                          consumer = current_user.username, 
+                          time_start = request.form.get('time_start') ,#datetime.strptime(request.form.get('time_start'),'%H:%M').time(),
+                          time_end = request.form.get('time_end'),#datetime.strptime(request.form.get('time_end'),'%H:%M').time(),
+                          date = datetime.strptime(request.form.get('date'),'%Y-%M-%S').date(),
+                          status = 0)
+        db.session.add(booking)
+        db.session.commit()
+        return redirect('/dashboard')
+    return redirect('/')
+
+
+@app.route('/events')
 @login_required
 def transport():
     return render_template('transportationcalendar.html')
 
+@app.route('/events/book',methods = ['POST','GET'])
+@login_required
+def book_event():
+    if request.method == "POST":
+        #check availability
+        print()
+        booking = ClassroomBookings(classroom = request.form.get('classroomName'),
+                          consumer = current_user.username, 
+                          time_start = request.form.get('time_start') ,#datetime.strptime(request.form.get('time_start'),'%H:%M').time(),
+                          time_end = request.form.get('time_end'),#datetime.strptime(request.form.get('time_end'),'%H:%M').time(),
+                          date = datetime.strptime(request.form.get('date'),'%Y-%M-%S').date(),
+                          status = 0)
+        db.session.add(booking)
+        db.session.commit()
+        return redirect('/dashboard')
+    return redirect('/events')
 
-
+@app.route('/contact')
+def contact():
+    return render_template("contactus.html")
 
 if __name__ == '__main__':      
     app.run()
