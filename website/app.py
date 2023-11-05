@@ -1,9 +1,10 @@
 from flask import Flask
-from flask import render_template,url_for,request,redirect
+from flask import render_template,url_for,request,redirect,flash
 from flask_sqlalchemy import SQLAlchemy 
 from flask_login import LoginManager,UserMixin,login_user, logout_user,login_required,current_user
 from datetime import datetime
 import pandas as pd
+import time_validate
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db.sqlite"
@@ -118,15 +119,28 @@ def book_classroom():
     if request.method == "POST":
         #check availability
         print()
+        avai = ClassroomBookings.query.filter_by(date = datetime.strptime(request.form.get('date'),'%Y-%M-%S').date()).all()
+        print(avai[0].classroom)
+        li = []
+        msg = ""
+        for i in avai:
+            li.append( (i.time_start,i.time_end))
         booking = ClassroomBookings(classroom = request.form.get('classroomName'),
                           consumer = current_user.username, 
                           time_start = request.form.get('time_start') ,#datetime.strptime(request.form.get('time_start'),'%H:%M').time(),
                           time_end = request.form.get('time_end'),#datetime.strptime(request.form.get('time_end'),'%H:%M').time(),
                           date = datetime.strptime(request.form.get('date'),'%Y-%M-%S').date(),
                           status = 0)
-        db.session.add(booking)
-        db.session.commit()
-        return redirect('/dashboard')
+
+        if(time_validate.validator(request.form.get('time_start'),request.form.get('time_end'),li) == 0):
+            db.session.add(booking)
+            db.session.commit()
+            msg  = "Slot booking has been succesfully submitted for review"
+            redirect('/dashboard')
+        else:
+            msg = "error timeslot is not available"
+    flash(msg)
+    print(msg)
     return redirect('/classroom')
 
 @app.route('/labs')
@@ -140,17 +154,29 @@ def book_lab():
     if request.method == "POST":
         #check availability
         print()
+        avai = LabBookings.query.filter_by(date = datetime.strptime(request.form.get('date'),'%Y-%M-%S').date()).all()
+        print(avai[0].classroom)
+        li = []
+        msg = ""
+        for i in avai:
+            li.append( (i.time_start,i.time_end))
         booking = LabBookings(classroom = request.form.get('classroomName'),
                           consumer = current_user.username, 
                           time_start = request.form.get('time_start') ,#datetime.strptime(request.form.get('time_start'),'%H:%M').time(),
                           time_end = request.form.get('time_end'),#datetime.strptime(request.form.get('time_end'),'%H:%M').time(),
                           date = datetime.strptime(request.form.get('date'),'%Y-%M-%S').date(),
                           status = 0)
-        db.session.add(booking)
-        db.session.commit()
-        return redirect('/dashboard')
-    return redirect('/')
 
+        if(time_validate.validator(request.form.get('time_start'),request.form.get('time_end'),li) == 0):
+            db.session.add(booking)
+            db.session.commit()
+            msg  = "Slot booking has been succesfully submitted for review"
+            redirect('/daashboard')
+        else:
+            msg = "error timeslot is not available"
+    flash(msg)
+    print(msg)
+    return redirect('/labs')
 
 @app.route('/events')
 @login_required
@@ -163,15 +189,28 @@ def book_event():
     if request.method == "POST":
         #check availability
         print()
+        avai = ClassroomBookings.query.filter_by(date = datetime.strptime(request.form.get('date'),'%Y-%M-%S').date()).all()
+        print(avai[0].classroom)
+        li = []
+        msg = ""
+        for i in avai:
+            li.append( (i.time_start,i.time_end))
         booking = ClassroomBookings(classroom = request.form.get('classroomName'),
                           consumer = current_user.username, 
                           time_start = request.form.get('time_start') ,#datetime.strptime(request.form.get('time_start'),'%H:%M').time(),
                           time_end = request.form.get('time_end'),#datetime.strptime(request.form.get('time_end'),'%H:%M').time(),
                           date = datetime.strptime(request.form.get('date'),'%Y-%M-%S').date(),
                           status = 0)
-        db.session.add(booking)
-        db.session.commit()
-        return redirect('/dashboard')
+
+        if(time_validate.validator(request.form.get('time_start'),request.form.get('time_end'),li) == 0):
+            db.session.add(booking)
+            db.session.commit()
+            msg  = "Slot booking has been succesfully submitted for review"
+            redirect('/dashboard')
+        else:
+            msg = "error timeslot is not available"
+    flash(msg)
+    print(msg)
     return redirect('/events')
 
 @app.route('/contact')
