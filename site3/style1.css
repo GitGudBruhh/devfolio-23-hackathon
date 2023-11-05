@@ -223,7 +223,7 @@ round: #9B59B6;
 
 .booking-form {
   width: 450px;
-  background: #00c8ff;
+  background: #abcdefcf;
   border-radius: 10px;
   border-style: solid;
   border-color:#abcede
@@ -248,15 +248,6 @@ round: #9B59B6;
 
 .booking-fields input{
   width: 100%;
-  padding-left: 2%;
-  height: 40px;
-  border-radius: 10px;
-  border-color: gray;
-}
-
-.booking-fields select{
-  width: 100%;
-  align-items: right;
   height: 40px;
   border-radius: 10px;
   border-color: gray;
