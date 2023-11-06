@@ -31,3 +31,11 @@ To install the given modules, use the "requirements.txt" by executing the follow
 ```bash
     pip install -m requirements.txt
 ```
+
+## Deploying The Website
+
+The web application can be started by running the app.py in the website directory
+```bash
+     cd website
+     python app.py
+```
